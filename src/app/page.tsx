@@ -1,103 +1,93 @@
-import Image from "next/image";
+import Sidebar from "./components/Sidebar";
+import Circles from "./components/Circles";
+import PartyCard from "./components/PartyCard";
+import CardGrid from "./components/CardGrid";
 
-export default function Home() {
+export default function Page() {
+  const parties = [
+    {
+      title: "Cadaver",
+      subtitle: "Horror marathon!",
+      image: "/paisaje1.jpg",
+      users: ["/user1.jpg", "/user2.jpg", "/user3.jpg"],
+    },
+    {
+      title: "Bladerunner 2049",
+      subtitle: "Sci fi binge",
+      image: "/paisaje2.jpg",
+      users: ["/user2.jpg", "/user3.jpg", "/user4.jpg"],
+    },
+    {
+      title: "Monsters Inc.",
+      subtitle: "Don’t make me grow up",
+      image: "/paisaje3.jpg",
+      users: ["/user3.jpg", "/user4.jpg", "/user5.jpeg"],
+    },
+    {
+      title: "Friends",
+      subtitle: "We were on a break!",
+      image: "/paisaje4.jpg",
+      users: ["/user1.jpg", "/user4.jpg", "/user5.jpeg"],
+    },
+  ];
+
+  const watching = [
+    { name: "Haunting of Hill House", image: "/card1.jpg" },
+    { name: "Ratched", image: "/card2.jpg" },
+    { name: "El Camino", image: "/card3.jpg" },
+    { name: "Stranger Things", image: "/card4.jpg" },
+  ];
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <main className="min-h-screen bg-gray-50">
+      {/* Contenedor centrado y grid: columna para sidebar + columna para contenido */}
+      <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-[240px_1fr]">
+        {/* Sidebar (oculto en móvil) */}
+        <aside className="hidden md:block">
+          <Sidebar />
+        </aside>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+        {/* Contenido principal */}
+        <div className="relative p-6 md:p-10">
+          {/* Hero */}
+          <div className="relative w-full h-[300px] md:h-[450px] overflow-hidden rounded-2xl mb-10 shadow-lg">
+            <img
+              src="/thewitcher.webp"
+              alt="The Witcher"
+              className="object-cover w-full h-full brightness-75"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <div className="absolute bottom-8 left-6 md:bottom-10 md:left-10 text-white">
+              <h1 className="text-3xl md:text-5xl font-bold mb-4">The Witcher</h1>
+              <button className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg transition-all">
+                Watch
+              </button>
+            </div>
+          </div>
+
+          {/* Parties */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold mb-4 text-gray-900">Parties</h2>
+            {/* En móvil las cards ocupan todo el ancho (w-full), en md+ se muestran en fila */}
+            <div className="flex flex-wrap gap-4 justify-start">
+              {parties.map((party) => (
+                <PartyCard
+                  key={party.title}
+                  title={party.title}
+                  subtitle={party.subtitle}
+                  image={party.image}
+                  users={party.users}
+                />
+              ))}
+            </div>
+          </section>
+
+          {/* Continue Watching */}
+          <CardGrid title="Continue watching" items={watching} />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </div>
+
+      {/* Círculos - fixed a la derecha (oculto en móvil). z-50 para que queden arriba */}
+      <Circles />
+    </main>
   );
 }
